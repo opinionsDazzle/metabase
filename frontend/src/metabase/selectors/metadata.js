@@ -93,7 +93,15 @@ export const getMetadata = createSelector(
     meta.metrics = copyObjects(meta, metrics, instantiateMetric);
 
     // database
-    hydrateList(meta.databases, "tables", meta.tables);
+    hydrate(meta.databases, "tables", database => {
+      if (database.tables?.length > 0) {
+        return database.tables.map(tableId => meta.table(tableId));
+      }
+
+      return Object.values(meta.tables).filter(
+        table => table.schema && table.db_id === database.id,
+      );
+    });
     // schema
     hydrate(meta.schemas, "database", s => meta.database(s.database));
     // table
