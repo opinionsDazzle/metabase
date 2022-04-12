@@ -39,9 +39,9 @@
    ;; Now for each table, sync the fields
    (sync-util/create-sync-step "sync-fields" sync-fields/sync-fields! sync-fields-summary)
    ;; Now for each table, sync the FKS. This has to be done after syncing all the fields to make sure target fields exist
-   (sync-util/create-sync-step "sync-fks" sync-fks/sync-fks! sync-fks-summary)
+   (sync-util/create-sync-step "sync-fks" sync-fks/sync-fks! sync-fks-summary)])
    ;; finally, sync the metadata metadata table if it exists.
-   (sync-util/create-sync-step "sync-metabase-metadata" metabase-metadata/sync-metabase-metadata!)])
+   ;(sync-util/create-sync-step "sync-metabase-metadata" metabase-metadata/sync-metabase-metadata!)])
 
 (s/defn sync-db-metadata!
   "Sync the metadata for a Metabase `database`. This makes sure child Table & Field objects are synchronized."
