@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11-jre-alpine as runner
+FROM openjdk:8-jre-alpine
 
 ENV FC_LANG en-US LC_CTYPE en_US.UTF-8
 
@@ -14,7 +14,7 @@ RUN apk add -U bash ttf-dejavu fontconfig curl java-cacerts && \
     mkdir -p /plugins && chmod a+rwx /plugins
 
 # add Metabase script and uberjar
-COPY --from=builder /home/circleci/target/uberjar/metabase.jar /app/
+COPY target/uberjar/metabase.jar /app/
 COPY bin/docker/run_metabase.sh /app/
 
 # expose our default runtime port
