@@ -1,23 +1,3 @@
-###################
-# STAGE 1: builder
-###################
-
-FROM metabase/ci:circleci-java-11-clj-1.10.3.929-07-27-2021-node-browsers as builder
-
-ARG MB_EDITION=oss
-
-WORKDIR /home/circleci
-
-COPY --chown=circleci . .
-RUN INTERACTIVE=false CI=true MB_EDITION=$MB_EDITION bin/build
-
-# ###################
-# # STAGE 2: runner
-# ###################
-
-## Remember that this runner image needs to be the same as bin/docker/Dockerfile with the exception that this one grabs the
-## jar from the previous stage rather than the local build
-
 FROM eclipse-temurin:11-jre-alpine as runner
 
 ENV FC_LANG en-US LC_CTYPE en_US.UTF-8

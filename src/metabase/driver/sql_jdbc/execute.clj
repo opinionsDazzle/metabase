@@ -364,6 +364,7 @@
 
 (defmethod execute-statement! :sql-jdbc
   [driver ^Statement stmt ^String sql]
+           (println sql)
   (if (.execute stmt sql)
     (.getResultSet stmt)
     (throw (ex-info (str (tru "Select statement did not produce a ResultSet for native query"))
@@ -489,7 +490,7 @@
   ([driver {{sql :query, params :params} :native, :as outer-query} context respond]
    {:pre [(string? sql) (seq sql)]}
    (let [remark   (qputil/query->remark driver outer-query)
-         sql      (str "-- " remark "\n" sql)
+         sql      (str "" sql)
          max-rows (limit/determine-query-max-rows outer-query)]
      (execute-reducible-query driver sql params max-rows context respond)))
 
